@@ -15,7 +15,6 @@ class Generator extends Actor with ActorLogging {
       self ! GeneratePasswordList(passwordHint, passwordGenerator)
     case Initialize(nOfSlaves, originalSender) =>
       if (nOfSlaves > 0) {
-        //val originalSender = sender()
         val slaveRefs = for (i <- 0 until nOfSlaves) yield context.actorOf(Props[Slave], s"slave_$i")
         context.become(withSlave(slaveRefs, 0, 0, Map(), originalSender))
       }
