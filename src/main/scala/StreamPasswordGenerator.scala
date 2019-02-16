@@ -18,6 +18,7 @@ object StreamPasswordGenerator extends App {
     .mapAsync(parallelism)(_ => Future(generateSecurePassword(passwordHint)))
     .toMat(pwdSeqSink)(Keep.right)
 
+  // run stream
   pwdSeq.run().onComplete{
     s ⇒
       println(s)
